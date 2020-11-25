@@ -512,11 +512,13 @@ function (paraview_client_documentation)
   endif ()
 
   include("${_ParaViewClient_cmake_dir}/paraview-find-package-helpers.cmake" OPTIONAL)
-  find_program(qt_xmlpatterns_executable
-    NAMES xmlpatterns-qt5 xmlpatterns
-    HINTS "${Qt5_DIR}/../../../bin"
-          "${Qt5_DIR}/../../../libexec/qt5/bin"
-    DOC   "Path to xmlpatterns")
+  if (NOT qt_xmlpatterns_executable)
+    find_program(qt_xmlpatterns_executable
+      NAMES xmlpatterns-qt5 xmlpatterns
+      HINTS "${Qt5_DIR}/../../../bin"
+            "${Qt5_DIR}/../../../libexec/qt5/bin"
+      DOC   "Path to xmlpatterns")
+  endif ()
   mark_as_advanced(qt_xmlpatterns_executable)
 
   if (NOT qt_xmlpatterns_executable)
